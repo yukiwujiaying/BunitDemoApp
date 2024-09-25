@@ -1,0 +1,39 @@
+﻿@page "/profile/{UserId}"
+@inject NavigationManager NavigationManager
+
+<h3>Profile</h3>
+
+@if (isLoading)
+{
+    <p>Loading profile...</p>
+}
+else if (string.IsNullOrEmpty(UserId))
+{
+    <p>No user found.</p>
+}
+else
+{
+    <p>User ID: @UserId</p>
+    <button @onclick="NavigateToNewProfile">Go to new profile</button>
+}
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    private bool isLoading;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Simulate fetching user data asynchronously
+        isLoading = true;
+        await Task.Delay(1000); // Simulate a delay
+        isLoading = false;
+    }
+
+    private void NavigateToNewProfile()
+    {
+        // Navigate to another profile page (this is just an example)
+        NavigationManager.NavigateTo("/new-profile");
+    }
+}
